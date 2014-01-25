@@ -17,12 +17,12 @@ end
 every_time = 60 * 15
 
 irc_config = {
-  :server   => "irc.freenode.org:6667"
-  :channel  =>  '#hosting-ja'
-  :color    =>  "\x0312"
-  :ssl      =>  false
-  :join     =>  false
-  :notice   =>  true
+  :server   => 'irc.freenode.org:6667',
+  :channel  =>  '#hosting-ja',
+  :color    =>  "\x0312",
+  :ssl      =>  false,
+  :join     =>  false,
+  :notice   =>  true,
 }
 
 interest_users = [
