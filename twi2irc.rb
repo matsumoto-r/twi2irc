@@ -6,6 +6,7 @@ require 'twitter'
 require 'pp'
 require 'kconv'
 
+# Add twitter consumer key and token
 Twitter.configure do |config|
   config.consumer_key       = ''
   config.consumer_secret    = ''
@@ -60,7 +61,7 @@ now = Time.new
 
 interest_users.each do |user|
   Twitter.user_timeline(user).each do |tweet|
-    if now - tweet[:created_at] < every
+    if now - tweet[:created_at] < every_time
       message = tweet.text.sub(/\n/, "")
       CarrierPigeon.send(
         :uri      => "irc://" + user + "tter@" + irc_config[:server] + "/" + irc_config[:channel],
