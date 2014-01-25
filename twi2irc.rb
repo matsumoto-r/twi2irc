@@ -14,7 +14,7 @@ Twitter.configure do |config|
   config.oauth_token_secret = ''
 end 
 
-# every 15 minutes
+# check every 15 minutes
 every_time = 60 * 15
 
 irc_config = {
