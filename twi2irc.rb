@@ -13,9 +13,18 @@ Twitter.configure do |config|
   config.oauth_token_secret = ''
 end 
 
-server = "irc.freenode.org:6667"
-channel = '#hosting-ja'
-every = 60 * 15
+# every 15 minutes
+every_time = 60 * 15
+
+irc_config = {
+  :server   => "irc.freenode.org:6667"
+  :channel  =>  '#hosting-ja'
+  :color    =>  "\x0312"
+  :ssl      =>  false
+  :join     =>  false
+  :notice   =>  true
+}
+
 interest_users = [
   "def_jp",
   "jpcert",
@@ -46,7 +55,6 @@ interest_users = [
 # 13 pink (light purple) (fuchsia)
 # 14 grey
 # 15 light grey (silver)
-color = "\x0312"
 
 now = Time.new
 
@@ -55,11 +63,11 @@ interest_users.each do |user|
     if now - tweet[:created_at] < every
       message = tweet.text.sub(/\n/, "")
       CarrierPigeon.send(
-        :uri      => "irc://" + user + "tter@" + server + "/" + channel,
-        :message  => color + "[" + tweet[:created_at].to_s + "] " + message,
-        :ssl      => false,
-        :join     => false,
-        :notice   => true,
+        :uri      => "irc://" + user + "tter@" + irc_config[:server] + "/" + irc_config[:channel],
+        :message  => irc_config[:color] + "[" + tweet[:created_at].to_s + "] " + message,
+        :ssl      => irc_config[:ssl],
+        :join     => irc_config[:join],
+        :notice   => irc_config[:notice],
       )
       sleep 2
     end
