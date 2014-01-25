@@ -15,7 +15,17 @@ end
 
 server = "irc.freenode.org:6667"
 channel = '#hosting-ja'
-now = Time.new
+every = 60 * 15
+interest_users = [
+  "def_jp",
+  "jpcert",
+  "malware_jp",
+  "security_info",
+  "JVN",
+  "security_inci",
+  "FSECUREBLOG",
+  "exploitdb",
+]
 
 # color code of message
 # \x03 + color number
@@ -38,20 +48,11 @@ now = Time.new
 # 15 light grey (silver)
 color = "\x0312"
 
-interest_users = [
-  "def_jp",
-  "jpcert",
-  "malware_jp",
-  "security_info",
-  "JVN",
-  "security_inci",
-  "FSECUREBLOG",
-  "exploitdb",
-]
+now = Time.new
 
 interest_users.each do |user|
   Twitter.user_timeline(user).each do |tweet|
-    if now - tweet[:created_at] < 60 * 15
+    if now - tweet[:created_at] < every
       message = tweet.text.sub(/\n/, "")
       CarrierPigeon.send(
         :uri      => "irc://" + user + "tter@" + server + "/" + channel,
