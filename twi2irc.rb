@@ -60,7 +60,7 @@ interest_users = [
 now = Time.new
 
 interest_users.each do |user|
-  Twitter.user_timeline(user).each do |tweet|
+  Twitter.user_timeline(user).reverse.each do |tweet|
     if now - tweet[:created_at] < every_time
       message = tweet.text.sub(/\n/, "")
       CarrierPigeon.send(
